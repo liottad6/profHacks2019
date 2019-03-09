@@ -18,14 +18,6 @@ def test():
     r = requests.get('https://eonet.sci.gsfc.nasa.gov/api/v2.1/events?days=20')
     return json.dumps(r.json())
 
-@app.route('/getLocData', methods=['POST', 'GET'])
-def getLocData():
-    loc = request.form['location']
-    geolocator = Nominatim(user_agent="hotSingleWildfires")
-    location = geolocator.geocode(loc)
-    print(location.latitude, location.longitude)
-    return
-
 
 
 if __name__ == '__main__':
