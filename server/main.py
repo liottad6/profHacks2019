@@ -1,11 +1,13 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
 from geopy.geocoders import Nominatim
+
 import requests
 import json
 import os
 
 template_dir = "../client/templates"
 static_dir = "../client/static"
+geolocator = Nominatim(user_agent="HotSingleWildfiresInYourArea")
 app = Flask(__name__, static_folder=static_dir, template_folder=template_dir)
 
 @app.route('/', methods = ['GET', 'POST'])
@@ -18,7 +20,6 @@ def hotnessCalculator():
     lat = location.latitude
     long = location.longitude
     return str(lat) + str(long)
-
 
 @app.route('/test', methods = ['GET'])
 def test():
