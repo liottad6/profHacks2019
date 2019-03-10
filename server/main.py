@@ -28,9 +28,16 @@ def searchHotSingles():
         x += 2
         y += 1  
     print (pairCoords)
+    
+    with open('readthis.json', 'w') as f:
+        z = 0
+        while (z < len(pairCoords)):
+            f.write("%s\n" % str(pairCoords[z]))
+            z += 1
 
 @app.route('/', methods = ['GET', 'POST'])
 def homepage():
+    searchHotSingles()
     return render_template('home.html')
 
 @app.route('/calculate', methods = ['POST'])
