@@ -8,50 +8,71 @@
   <style>
     a { text-decoration: none; }
     a:hover { text-decoration: underline; }
-    body h1 {font-size: 80px;}
-    .split {height: 100%; width: 50%; position: fixed; z-index: 1; top: 0; overflow-x: hidden; padding-top: 20px;}
+    body h1 {font-size: 40px;}
+    .split {height: 100%; width: 30%; position: fixed; z-index: 1; top: 0; overflow-x: hidden; padding-top: 20px;}
+          .split1 {height: 100%; width: 70%; position: fixed; z-index: 1; top: 0; overflow-x: hidden; padding-top: 0px;}
     .left {left: 0; background-color: azure;}
       .right {right: 0;}
     .title {text-align: center;}
     p {text-align: center;}
     .input_location {text-align: center;}
     .input_title {text-align: center;}
-      #map {width: 100%; height: 400px; background-color: gray;}
+      /*
+      .centered {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}*/
+      #map {width: 100%; height: 820px; background-color: gray;}
   </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        function sendTo() {
+        var theLocation = (document.getElementById('theLocation').value);
+        //"#myForm"
+        //.serializeArray()
+        var formData = JSON.stringify($(theLocation).serializeArray());
+        $.post("http://localhost:5000/calculate", formData);
+        
+        //console.log(theLocation);
+    }
+    </script>
 </head>
 
 <body>
     <div class="split left">
         <div class="centered">
-            <h1 class="title"> Weather Disaster </h1>
-            <p>This is a webpage that when entered a location</p>
-            <p>it will tell you the closest weather disaster near your area. </p>
+            <h1 class="title"> Hot Single <br />Wildfires<br/> in Your Area </h1>
+            <p>Find Disasters Near You</p>
             <h2 class="input_title">Enter a location that you would like to check up on.</h2>
-            <form class="input_location" METHOD="POST">
-                <input name="location">
-                <input type="submit">
+            <form class="input_location" action="http://localhost:5000/calculate" METHOD="POST">
+                <input name="location" id="theLocation" placeholder="Glassboro, NJ">
+                <input type="button" onclick="sendTo()" value="Submit!">
             </form>
         </div>
     </div>
     
     <div>
-        <div class="split right">
+        <div class="split1 right">
             <div>
-                <p>This is where the map will go</p>
                 <div id="map"></div>
                 <script>
                 function initMap() {
-                var uluru = {lat: -25.344, lng: 131.036};
-                var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: uluru});
-                var marker = new google.maps.Marker({position: uluru, map: map});
+                var glassboro = {lat: 39.7029, lng: -75.1118};
+                var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: glassboro});
+                var marker = new google.maps.Marker({position: glassboro, map: map});
                     }
                 </script>
                 <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZ97mYBC4EcyBXd74l0YOz5ZAtx9pJ0p8&callback=initMap">
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1RMRWU5G-3v7spYKWxz5mdw84bgRG-to&callback=initMap">
                 </script>
             </div>
         </div>
     </div>
+    
+
 
 </body>
 </html>
