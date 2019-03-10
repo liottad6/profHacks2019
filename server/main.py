@@ -17,8 +17,8 @@ def searchHotSingles():
     for events in data['events']:
         for geometries in events['geometries']:
             for coords in geometries['coordinates']:
-                print coords
-    print sum
+                print (coords)
+    print (sum)
 
 @app.route('/', methods = ['GET', 'POST'])
 def homepage():
