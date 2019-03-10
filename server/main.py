@@ -12,7 +12,7 @@ app = Flask(__name__, static_folder=static_dir, template_folder=template_dir)
 
 def searchHotSingles():
     rdata = requests.get('https://eonet.sci.gsfc.nasa.gov/api/v2.1/events?days=5')
-    data = rdata.json()
+    data =rdata.json()
     sum = 0
     for events in data['events']:
         for geometries in events['geometries']:
@@ -24,11 +24,12 @@ def searchHotSingles():
 def homepage():
     return render_template('home.html')
 
-@app.route('/calculate')
+@app.route('/calculate', methods = ['POST'])
 def hotnessCalculator():
-    location = geolocator.geocode("201 Mullica Hill Rd Glassboro")
-    lat = location.latitude
-    long = location.longitude
+    location = request.form['location']
+    loc = geolocator.geocode(location)
+    lat = loc.latitude
+    long = loc.longitude
     searchHotSingles()
     return str(lat) + str(long)
 # for each of the elements in the
