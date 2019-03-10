@@ -26,6 +26,22 @@
   text-align: center;
 }*/
       #map {width: 100%; height: 820px; background-color: gray;}
+            #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+      }
+      #pac-container {
+          text-align: center;
+      }
+      #title {
+          text-align: center;
+      }
   </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
@@ -36,27 +52,123 @@
             <h1 class="title"> Hot Single <br/>Wildfires<br/> in Your Area </h1>
             <p>Find Disasters Near You</p>
             <h2 class="input_title">Enter a location that you would like to check up on.</h2>
-            <form class="input_location" action="http://localhost:5000/calculate" METHOD="post">
-                <input type ="text" name="location" placeholder="Glassboro, NJ">
-                <input type="submit" value="Submit!">
-            </form>
+            <div id="title">
+          Find a location
         </div>
+        <div id="pac-container">
+        <input id="pac-input" type="text"
+            placeholder="Enter a location">
+      </div>
+    
     </div>
+
+
+            <!--<form class="input_location" action="http://localhost:5000/calculate" METHOD="post">
+                <input type ="text" name="location" id="pac-input" placeholder="Glassboro, NJ">
+                <input type="submit" value="Submit!"> 
+            </form> -->
+        </div>
+   <!-- </div> -->
 
     <div>
         <div class="split1 right">
             <div>
                 <div id="map"></div>
-                <script>
+              <!--  <script>
                 function initMap() {
                 var glassboro = {lat: 39.7029, lng: -75.1118};
                 var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: glassboro});
                 var marker = new google.maps.Marker({position: glassboro, map: map});
                  }
-                </script>
-                <script async defer
+                </script> -->
+                
+                   <script> 
+      // This example adds a search box to a map, using the Google Place Autocomplete
+      // feature. People can enter geographical searches. The search box will return a
+      // pick list containing a mix of places and predicted search terms.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API.
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13,
+          mapTypeId: 'roadmap'
+        });
+          
+                          var glassboro = {lat: 39.7029, lng: -75.1118};
+                var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: glassboro});
+                var marker = new google.maps.Marker({position: glassboro, map: map});
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+            </script>
+                
+                
+             <!--   <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1RMRWU5G-3v7spYKWxz5mdw84bgRG-to&callback=initMap">
-                </script>
+                </script> -->
+                
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1RMRWU5G-3v7spYKWxz5mdw84bgRG-to&libraries=places&libraries=places&callback=initMap"
+        async defer></script>
             </div>
         </div>
     </div>
