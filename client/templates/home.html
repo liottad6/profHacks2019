@@ -28,32 +28,21 @@
       #map {width: 100%; height: 820px; background-color: gray;}
   </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script>
-        function sendTo() {
-        var theLocation = (document.getElementById('theLocation').value);
-        //"#myForm"
-        //.serializeArray()
-        var formData = JSON.stringify($(theLocation).serializeArray());
-        $.post("http://localhost:5000/calculate", formData);
-        
-        //console.log(theLocation);
-    }
-    </script>
 </head>
 
 <body>
     <div class="split left">
         <div class="centered">
-            <h1 class="title"> Hot Single <br />Wildfires<br/> in Your Area </h1>
+            <h1 class="title"> Hot Single <br/>Wildfires<br/> in Your Area </h1>
             <p>Find Disasters Near You</p>
             <h2 class="input_title">Enter a location that you would like to check up on.</h2>
-            <form class="input_location" action="http://localhost:5000/calculate" METHOD="POST">
-                <input name="location" id="theLocation" placeholder="Glassboro, NJ">
-                <input type="button" onclick="sendTo()" value="Submit!">
+            <form class="input_location" action="http://localhost:5000/calculate" METHOD="post">
+                <input type ="text" name="location" placeholder="Glassboro, NJ">
+                <input type="submit" value="Submit!">
             </form>
         </div>
     </div>
-    
+
     <div>
         <div class="split1 right">
             <div>
@@ -63,7 +52,7 @@
                 var glassboro = {lat: 39.7029, lng: -75.1118};
                 var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: glassboro});
                 var marker = new google.maps.Marker({position: glassboro, map: map});
-                    }
+                 }
                 </script>
                 <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1RMRWU5G-3v7spYKWxz5mdw84bgRG-to&callback=initMap">
@@ -71,7 +60,7 @@
             </div>
         </div>
     </div>
-    
+
 
 
 </body>
