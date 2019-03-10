@@ -12,13 +12,21 @@ app = Flask(__name__, static_folder=static_dir, template_folder=template_dir)
 
 def searchHotSingles():
     rdata = requests.get('https://eonet.sci.gsfc.nasa.gov/api/v2.1/events?days=5')
-    data =rdata.json()
-    sum = 0
+    data = rdata.json()
+    allEvents = []
+    pairCoords = []
     for events in data['events']:
         for geometries in events['geometries']:
             for coords in geometries['coordinates']:
+                allEvents.append(coords)
                 print (coords)
-    print (sum)
+    x = 0
+    while (x < len(allEvents)):
+        y = 0
+        pairCoords.insert(y, [allEvents[x],allEvents[x+1]])
+        x += 2
+        y += 1  
+    print (pairCoords)
 
 @app.route('/', methods = ['GET', 'POST'])
 def homepage():
