@@ -1,5 +1,6 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, jsonify
 from geopy.geocoders import Nominatim
+from array import *
 
 import requests
 import json
